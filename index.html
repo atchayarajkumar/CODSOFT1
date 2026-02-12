@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Scientific Calculator</title>
+<style>
+body {
+    font-family: Arial;
+    background: linear-gradient(135deg, #E6E6FA, #C8A2C8); /* LAVENDER */
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+.calculator {
+    background:#222;
+    padding:20px;
+    border-radius:12px;
+    width:380px;
+}
+.display {
+    background:black;
+    color:#00ff90;
+    font-size:26px;
+    text-align:right;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:10px;
+}
+.buttons {
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:8px;
+}
+button {
+    padding:14px;
+    font-size:16px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+.num {background:#4e73df;color:white;}
+.op {background:#f6c23e;}
+.func {background:#36b9cc;color:white;}
+.equal {background:#1cc88a;color:white;grid-column:span 2;}
+.clear {background:#e74a3b;color:white;}
+</style>
+</head>
+<body>
+
+<div class="calculator">
+<div id="display" class="display">0</div>
+
+<div class="buttons">
+<button class="func" onclick="add('sin(')">sin</button>
+<button class="func" onclick="add('cos(')">cos</button>
+<button class="func" onclick="add('tan(')">tan</button>
+<button class="func" onclick="add('log(')">log</button>
+<button class="func" onclick="add('ln(')">ln</button>
+
+<button class="func" onclick="add('sqrt(')">√</button>
+<button class="func" onclick="add('^2')">x²</button>
+<button class="func" onclick="add('pi')">π</button>
+<button class="func" onclick="add('%')">%</button>
+<button class="clear" onclick="clearDisplay()">C</button>
+
+<button class="num" onclick="add('7')">7</button>
+<button class="num" onclick="add('8')">8</button>
+<button class="num" onclick="add('9')">9</button>
+<button class="op" onclick="add('/')">÷</button>
+<button class="op" onclick="add('(')">(</button>
+
+<button class="num" onclick="add('4')">4</button>
+<button class="num" onclick="add('5')">5</button>
+<button class="num" onclick="add('6')">6</button>
+<button class="op" onclick="add('*')">×</button>
+<button class="op" onclick="add(')')">)</button>
+
+<button class="num" onclick="add('1')">1</button>
+<button class="num" onclick="add('2')">2</button>
+<button class="num" onclick="add('3')">3</button>
+<button class="op" onclick="add('-')">−</button>
+<button class="op" onclick="del()">DEL</button>
+
+<button class="num" onclick="add('0')">0</button>
+<button class="num" onclick="add('.')">.</button>
+<button class="equal" onclick="calculate()">=</button>
+<button class="op" onclick="add('+')">+</button>
+</div>
+</div>
+
+<script>
+let display=document.getElementById("display");
+
+function add(val){
+    if(display.innerText=="0") display.innerText=val;
+    else display.innerText+=val;
+}
+function clearDisplay(){ display.innerText="0"; }
+function del(){
+    display.innerText=display.innerText.slice(0,-1);
+    if(display.innerText=="") display.innerText="0";
+}
+function convert(exp){
+    exp=exp.replace(/sin/g,"Math.sin");
+    exp=exp.replace(/cos/g,"Math.cos");
+    exp=exp.replace(/tan/g,"Math.tan");
+    exp=exp.replace(/log/g,"Math.log10");
+    exp=exp.replace(/ln/g,"Math.log");
+    exp=exp.replace(/sqrt/g,"Math.sqrt");
+    exp=exp.replace(/pi/g,"Math.PI");
+    exp=exp.replace(/\^2/g,"**2");
+    exp=exp.replace(/%/g,"/100");
+    return exp;
+}
+function calculate(){
+    try{
+        display.innerText=eval(convert(display.innerText));
+    }catch{
+        display.innerText="Error";
+    }
+}
+</script>
+
+</body>
+</html>
